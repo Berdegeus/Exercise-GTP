@@ -20,14 +20,13 @@ function promptExerciseDescription() {
     });
   });
 }
-classTheme = input("Enter the class theme: ")
 
 // Function to generate Python code for the exercise description
 async function generatePythonCode(exerciseDescription) {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "Act as an computer science student in the first semester, in a class about:", classTheme },
+      { role: "system", content: "Act as an computer science student in the first semester, in a class about: lists"},
       { role: "system", content: "I will give you some Python exercises in portuguese. You translate it and do it in the most optimized way. Use CamelCase in the variable names, do not output any text, only code" },
       { role: "system", content: "coment a line with a resume of the exercise input in potugese using, Exercício: description, comment above the code with the # tag" },
       { role: "system", content: "add some simple comments, not for all the lines, only the essencial" },
