@@ -12,24 +12,14 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-// Function to prompt the user for the exercise description
-function promptExerciseDescription() {
-  return new Promise((resolve) => {
-    rl.question("Enter the exercise description: ", (description) => {
-      resolve(description);
-    });
-  });
-}
-
 // Function to generate Python code for the exercise description
 async function generatePythonCode(exerciseDescription) {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "Act as an computer science student in the first semester, in a class about: lists"},
-      { role: "system", content: "I will give you some Python exercises in portuguese. You translate it and do it in the most optimized way. Use CamelCase in the variable names, do not output any text, only code" },
-      { role: "system", content: "coment a line with a resume of the exercise input in potugese using, Exercício: description, comment above the code with the # tag" },
-      { role: "system", content: "add some simple comments, not for all the lines, only the essencial" },
+      { role: "system", content: "I will give you some Python exercises in portuguese. You translate it and do it in the most simple way. do not output any text, only code" },
+      { role: "system", content: "coment a line with the exercise input in potugese using, Exercício: description, comment above the code with #" },
+      { role: "system", content: "add some simple comments, only the essencial" },
       { role: "user", content: exerciseDescription },
     ],
   });
@@ -48,8 +38,8 @@ async function generatePythonFiles(exercisesFile) {
   });
 
   for await (const exerciseDescription of rl) {
-    if (exerciseCount > 10) {
-      break; // Break the loop if exerciseCount exceeds 10
+    if (exerciseCount > 20) {
+      break; // Break the loop if exerciseCount exceeds 20
     }
 
     const generatedCode = await generatePythonCode(exerciseDescription);
